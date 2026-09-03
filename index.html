@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCzona - AI Assistant</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: #1e293b;
+            padding: 30px 25px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            max-width: 420px;
+            width: 100%;
+            border: 1px solid #334155;
+        }
+        h2 { color: #38bdf8; margin-top: 0; margin-bottom: 10px; font-size: 22px; }
+        p { color: #94a3b8; font-size: 14px; line-height: 1.4; margin-bottom: 20px; }
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #2563eb;
+            color: white;
+            padding: 11px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #1d4ed8; }
+        .btn-instagram { background-color: #e11d48; }
+        .btn-instagram:hover { background-color: #be123c; }
+        .btn-youtube { background-color: #dc2626; }
+        .btn-youtube:hover { background-color: #b91c1c; }
+        .btn-success { background-color: #16a34a; margin-top: 4px; }
+        .btn-success:hover { background-color: #15803d; }
+        .hidden { display: none; }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+            background-color: #0f172a;
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+        input[type="text"]:focus { border-color: #38bdf8; }
+        #ai-response {
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #0f172a;
+            border-radius: 8px;
+            color: #38bdf8;
+            text-align: left;
+            font-size: 14px;
+            min-height: 45px;
+            border: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Majburiy obuna bloki -->
+    <div id="sub-wall" class="card">
+        <h2>🔒 Majburiy Obuna</h2>
+        <p>PCzona AI imkoniyatlaridan foydalanish uchun sahifalarimizga obuna bo'ling!</p>
+        
+        <a href="https://t.me/pczona_off" target="_blank" class="btn">1. Telegram kanalga obuna bo'lish</a>
+        <a href="https://www.instagram.com/pczona_off?igsh=bDIxbW5jaWZhZndy" target="_blank" class="btn btn-instagram">2. Instagram sahifaga obuna bo'lish</a>
+        <a href="https://www.youtube.com/@PCzona_off" target="_blank" class="btn btn-youtube">3. YouTube kanalga obuna bo'lish</a>
+        
+        <button class="btn btn-success" onclick="checkSubscription()">4. Tasdiqlash va kirish</button>
+    </div>
+
+    <!-- AI Xizmat bloki -->
+    <div id="ai-content" class="card hidden">
+        <h2>🤖 PCzona AI Chat</h2>
+        <p>Tabriklaymiz! Muvaffaqiyatli ulandingiz.</p>
+        <input type="text" id="user-input" placeholder="Savolingizni yozing...">
+        <button class="btn" onclick="sendToAI()">Yuborish</button>
+        <div id="ai-response">Sun'iy intellekt javob berishga tayyor...</div>
+    </div>
+
+    <script>
+        function checkSubscription() {let subscribed = confirm("Barcha tarmoqlarga obuna bo'ldingizmi?");
+            if (subscribed) {
+                document.getElementById('sub-wall').classList.add('hidden');
+                document.getElementById('ai-content').classList.remove('hidden');
+            } else {
+                alert("Iltimos, obuna bo'lganingizni tasdiqlang!");
+            }
+        }
+
+        function sendToAI() {
+            let text = document.getElementById('user-input').value;
+            if(!text) {
+                alert("Iltimos, savol yozing!");
+                return;
+            }
+            document.getElementById('ai-response').innerText = "PCzona AI: '" + text + "' bo'yicha ma'lumot qidirilmoqda...";
+        }
+    </script>
+</body>
+</html>
