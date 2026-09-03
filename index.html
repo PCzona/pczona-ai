@@ -121,3 +121,91 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCzona - AI Assistant</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: sans-serif; background-color: #0f172a; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .container { background-color: #1e293b; padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h1 { font-size: 22px; color: #38bdf8; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 13px; margin-bottom: 15px; }
+        .btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; text-decoration: none; }
+        .tg { background-color: #0088cc; color: white; }
+        .ig { background-color: #e1306c; color: white; }
+        .yt { background-color: #ff0000; color: white; }
+        #chat-section { display: none; text-align: left; }
+        .chat-box { height: 240px; background: #0f172a; border-radius: 8px; padding: 10px; overflow-y: auto; margin-bottom: 10px; border: 1px solid #334155; font-size: 13px; }
+        .msg { margin-bottom: 8px; padding: 8px; border-radius: 6px; }
+        .user-msg { background: #3b82f6; text-align: right; }
+        .ai-msg { background: #334155; text-align: left; }
+        input[type="text"] { width: calc(100% - 65px); padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; outline: none; }
+        .send-btn { width: 55px; padding: 10px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        #enter-chat { background-color: #475569; color: #94a3b8; pointer-events: none; }
+        #enter-chat.active { background-color: #22c55e; color: white; pointer-events: auto; }
+    </style>
+</head>
+<body>
+    <div class="container" id="gate-section">
+        <h1>PCzona AI Assistant</h1>
+        <p>Chatdan foydalanish uchun 2 ta kanalga o'ting:</p>
+        <a href="https://t.me/pczona_off" target="_blank" class="btn tg" onclick="unlock()">Telegramga o'tish</a>
+        <a href="https://instagram.com/pczona_off" target="_blank" class="btn ig" onclick="unlock()">Instagramga o'tish</a>
+        <a href="https://youtube.com/@PCzona_off" target="_blank" class="btn yt" onclick="unlock()">YouTube-ni ko'rish</a>
+        <button class="btn" id="enter-chat" onclick="openChat()">Chatga kirish</button>
+    </div>
+
+    <div class="container" id="chat-section">
+        <h1>🤖 PCzona AI</h1>
+        <div class="chat-box" id="chatBox">
+            <div class="msg ai-msg">Salom! Savolingizni yozing, to'g'ri javob beraman.</div>
+        </div>
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="userInput" placeholder="Savol yozing...">
+            <button class="send-btn" onclick="sendMsg()">Yubor</button>
+        </div>
+    </div>
+
+    <script>
+        let c = 0;
+        function unlock() {
+            c++;
+            if (c >= 2) {
+                let b = document.getElementById('enter-chat');
+                b.classList.add('active');
+                b.innerText = "Chatga kirish";
+            }
+        }
+        function openChat() {
+            document.getElementById('gate-section').style.display = 'none';
+            document.getElementById('chat-section').style.display = 'block';
+        }
+        async function sendMsg() {
+            let inp = document.getElementById('userInput');
+            let t = inp.value.trim();
+            if (!t) return;
+            let box = document.getElementById('chatBox');
+            box.innerHTML += <div class="msg user-msg">${t}</div>;
+            inp.value = '';
+            box.scrollTop = box.scrollHeight;
+
+         let loadId = 'l_' + Date.now();
+            box.innerHTML += <div class="msg ai-msg" id="${loadId}">Javob topilmoqda...</div>;
+            box.scrollTop = box.scrollHeight;try {
+                let res = await fetch(https://api.duckduckgo.com/?q=${encodeURIComponent(t)}&format=json);
+                let data = await res.json();
+                let ans = data.AbstractText || (data.RelatedTopics && data.RelatedTopics[0] ? data.RelatedTopics[0].Text : null);
+                if (!ans) {
+                    ans = Sizning "${t}" savolingiz bo'yicha PCzona AI tizimi ishga tushdi. Zaryadiz tugamasdan telefoningizni quvvatga taqib oling!;
+                }
+                document.getElementById(loadId).innerText = ans;
+            } catch(e) {
+                document.getElementById(loadId).innerText = "Tarmoqda xatolik bo'ldi, qaytadan yozing.";
+            }
+            box.scrollTop = box.scrollHeight;
+        }
+    </script>
+</body>
+</html>
